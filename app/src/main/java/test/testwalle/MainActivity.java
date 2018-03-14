@@ -13,7 +13,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());
-        ((TextView)findViewById(R.id.test)).setText(channel+"");
+        TextView  textView=(TextView)findViewById(R.id.test);
+        textView.setText(channel+""+MApplication.BASE_URL);
 
     }
 }
