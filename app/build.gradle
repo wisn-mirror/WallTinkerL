@@ -5,6 +5,7 @@ apply plugin: 'walle'
 android {
 
     compileSdkVersion 26
+    buildToolsVersion '26.0.0'
 
     //recommend Tinker相关配置
     dexOptions {
@@ -45,7 +46,7 @@ android {
 //        buildConfigField "String", "TINKER_ID", "\"${getTinkerIdValue()}\""
         buildConfigField "String", "PLATFORM", "\"all\""
         buildConfigField ("String", "BASE_URL", "\"http://m.laiyifen.com\"")
-
+        flavorDimensions "productevn"
     }
 
 
@@ -56,58 +57,63 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//    sourceSets {
-//        main {
-//            jniLibs.srcDirs = ['libs']
-//        }
-//    }
-//    projectName - 项目名字
-//    appName - App模块名字
-//    packageName - applicationId (App包名packageName)
-//    buildType - buildType (release/debug等)
-//    channel - channel名称 (对应渠道打包中的渠道名字)
-//    versionName - versionName (显示用的版本号)
-//    versionCode - versionCode (内部版本号)
-//    buildTime - buildTime (编译构建日期时间)
-//    fileSHA1 - fileSHA1 (最终APK文件的SHA1哈希值)
-//    flavorName - 编译构建 productFlavors 名
 
-//    flavorDimensions 'product', 'version'
-   /* flavorDimensions 'version'
     productFlavors {
-        *//* aa {
-             dimension 'product'
-             buildConfigField ("String", "BASE_URL", "\"http://m.laiyifen.com\"")
-         }
-         bb {
-             dimension 'product'
-             buildConfigField ("String", "BASE_URL", "\"http://m.laiyifen.com\"")
-         }*//*
-        pro_release {
-            dimension 'version'
-            buildConfigField("String", "BASE_URL", "\"http://m.pro_release.com\"")
+        //开发环境
+        develop {
+            dimension "productevn"
+
+            buildConfigField ("String", "BASE_URL", "\"http://develop.laiyifen.com\"")
+            buildConfigField "int", "ENV_TYPE", "1"
+            applicationId 'test.testwalle.develop'
+            manifestPlaceholders = [
+                    app_name: "开-WalleDemo",
+                    app_icon: "@mipmap/ic_launcher"
+            ]
         }
-        pro_dev {
-            dimension 'version'
-            buildConfigField("String", "BASE_URL", "\"http://m.pro_dev.com\"")
+        //测试环境
+        check {
+            dimension "productevn"
+
+            buildConfigField ("String", "BASE_URL", "\"http://check.laiyifen.com\"")
+            buildConfigField "int", "ENV_TYPE", "2"
+            applicationId 'test.testwalle.check'
+            manifestPlaceholders = [
+                    app_name: "测-WalleDemo",
+                    app_icon: "@mipmap/ic_launcher"
+            ]
         }
-    }*/
+        //生产环境
+        product {
+            dimension "productevn"
+            buildConfigField ("String", "BASE_URL", "\"http://product.laiyifen.com\"")
+            buildConfigField "int", "ENV_TYPE", "3"
+            applicationId 'test.testwalle.product'
+            manifestPlaceholders = [
+                    app_name: "WalleDemo",
+                    app_icon: "@mipmap/ic_launcher"
+            ]
+        }
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.meituan.android.walle:library:1.1.3'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.meituan.android.walle:library:1.1.3'
     // 多dex 打包的类库
-    implementation 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:multidex:1.0.1'
     //tinker的核心库
 //    implementation("com.tencent.tinker:tinker-android-lib:${TINKER_VERSION}") { changing = true }
     //用于生成application类
 //    provided("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
 //    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestCompile 'com.android.support.test:runner:1.0.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestCompile 'com.android.support:support-annotations:26.1.0'
+
+
 }
 walle {
     // 指定渠道包的输出路径

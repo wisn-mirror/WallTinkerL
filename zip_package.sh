@@ -1,4 +1,9 @@
 #生成渠道包
-./gradlew clean assembleReleaseChannels
+#./gradlew clean assembleReleaseChannels
 #支持 productFlavors
 #./gradlew clean assembleMeituanReleaseChannels
+#gradle  clean assembleProductRelease -PchannelList=qihu,vivo,lenovo
+#gradle clean assembleProductRelease -PchannelFile=channel
+
+
+gradle clean assembleProductReleaseChannels
