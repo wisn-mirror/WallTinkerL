@@ -6,4 +6,8 @@
 #gradle clean assembleProductRelease -PchannelFile=channel
 
 
-gradle clean assembleProductReleaseChannels
+#gradle clean assembleProductReleaseChannels
+gradle clean assembleCheckReleaseChannels
+#选中渠道打包
+#gradle assembleProductRelease -PchannelList=qihu,vivo,lenovo
+
