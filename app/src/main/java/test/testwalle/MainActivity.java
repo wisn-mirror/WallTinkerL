@@ -14,7 +14,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());
         TextView  textView=(TextView)findViewById(R.id.test);
-        textView.setText(channel+""+MApplication.BASE_URL);
+        textView.setText("更新的补丁："+channel+""+MApplication.BASE_URL);
+//        textView.setText(channel+""+MApplication.BASE_URL);
 
     }
 }
