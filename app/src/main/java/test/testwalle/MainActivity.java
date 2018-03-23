@@ -4,6 +4,11 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Build;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,23 +18,64 @@ import android.widget.Toast;
 
 import com.meituan.android.walle.WalleChannelReader;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button button;
+    private TextView textView;
+    private TabLayout toolbar_tab;
+    private ViewPager viewpager;
+    private String[] data={"aaa","bbb","ccc"};
+    private List<TextFragment> fragments=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());
-        final TextView  textView=(TextView)findViewById(R.id.test);
-        Button  button=(Button)findViewById(R.id.button);
-//        textView.setText("更新的补丁："+channel+""+MApplication.BASE_URL);
-        textView.setText("更新的补丁2222wwww："+channel+""+MApplication.BASE_URL);
-//        textView.setText(channel+""+MApplication.BASE_URL);
+        textView = (TextView)findViewById(R.id.test);
+        toolbar_tab = (TabLayout)findViewById(R.id.toolbar_tab);
+        viewpager = (ViewPager)findViewById(R.id.viewpager);
+        button = (Button)findViewById(R.id.button);
+        textView.setText("："+channel+""+MApplication.BASE_URL);
+        for(int i=0;i<data.length;i++){
+            fragments.add(new TextFragment());
+            TabLayout.Tab tab = toolbar_tab.newTab();
+            tab.setText(data[i]);
+            toolbar_tab.addTab(tab);
+        }
+        viewpager.setAdapter(new FragmentViewPager(getSupportFragmentManager()));
+        toolbar_tab.setupWithViewPager(viewpager);
+    }
+    class FragmentViewPager  extends FragmentPagerAdapter{
+
+        public FragmentViewPager(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return data.length;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+//            return super.getPageTitle(position);
+            return data[position];
+        }
+    }
+    public void update(){
+        //        textView.setText(channel+""+MApplication.BASE_URL);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,16 +97,16 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 final boolean deviceRooted = RootCheckUtils.isDeviceRooted();
 
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(deviceRooted){
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(deviceRooted){
                             Toast.makeText(MainActivity.this,"有root权限",Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(MainActivity.this,"没有root权限",Toast.LENGTH_SHORT).show();
-                            }
+                        }else{
+                            Toast.makeText(MainActivity.this,"没有root权限",Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    }
+                });
 
             }
         });
