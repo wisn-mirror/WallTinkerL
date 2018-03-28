@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="test.testwalle">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".MApplication"
         android:allowBackup="true"
@@ -16,7 +18,38 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".AAAActivity"
+            android:label="@string/title_activity_main2">
+            <intent-filter>
+                <!-- 接受以"http://lyf-app.com/recipe"开头的URI -->
+                <action android:name="aaa" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="aaa.com"
+                    android:pathPrefix="/recipe"
+                    android:scheme="aaa" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".BBBActivity">
+            <intent-filter>
+                <!-- 接受以"http://lyf-app.com/recipe"开头的URI -->
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="bbb" />
+                <data
+                    android:host="bbb.com"
+                    android:scheme="aaa" />
+            </intent-filter>
+
         </activity>
     </application>
 

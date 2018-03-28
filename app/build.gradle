@@ -45,7 +45,7 @@ android {
          */
 //        buildConfigField "String", "TINKER_ID", "\"${getTinkerIdValue()}\""
         buildConfigField "String", "PLATFORM", "\"all\""
-        buildConfigField ("String", "BASE_URL", "\"http://m.laiyifen.com\"")
+        buildConfigField("String", "BASE_URL", "\"http://m.laiyifen.com\"")
         flavorDimensions "productevn"
     }
 
@@ -63,7 +63,7 @@ android {
         develop {
             dimension "productevn"
 
-            buildConfigField ("String", "BASE_URL", "\"http://develop.laiyifen.com\"")
+            buildConfigField("String", "BASE_URL", "\"http://develop.laiyifen.com\"")
             buildConfigField "int", "ENV_TYPE", "1"
             applicationId 'test.testwalle.develop'
             manifestPlaceholders = [
@@ -75,7 +75,7 @@ android {
         check {
             dimension "productevn"
 
-            buildConfigField ("String", "BASE_URL", "\"http://check.laiyifen.com\"")
+            buildConfigField("String", "BASE_URL", "\"http://check.laiyifen.com\"")
             buildConfigField "int", "ENV_TYPE", "2"
             applicationId 'test.testwalle.check'
             manifestPlaceholders = [
@@ -86,7 +86,7 @@ android {
         //生产环境
         product {
             dimension "productevn"
-            buildConfigField ("String", "BASE_URL", "\"http://product.laiyifen.com\"")
+            buildConfigField("String", "BASE_URL", "\"http://product.laiyifen.com\"")
             buildConfigField "int", "ENV_TYPE", "3"
             applicationId 'test.testwalle.product'
             manifestPlaceholders = [
@@ -103,7 +103,9 @@ dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
 
         //无需引入tinker的任何库,使用tinkerpatch sdk即可
-        implementation("com.tinkerpatch.sdk:tinkerpatch-android-sdk:${TINKERPATCH_VERSION}") { changing = true }
+        implementation("com.tinkerpatch.sdk:tinkerpatch-android-sdk:${TINKERPATCH_VERSION}") {
+            changing = true
+        }
 
         implementation 'com.android.support:appcompat-v7:26.1.0'
         implementation 'com.android.support:design:26.1.0'
@@ -118,7 +120,9 @@ dependencies {
     } else {
         compile fileTree(dir: 'libs', include: ['*.jar'])
         //无需引入tinker的任何库,使用tinkerpatch sdk即可
-        compile("com.tinkerpatch.sdk:tinkerpatch-android-sdk:${TINKERPATCH_VERSION}") { changing = true }
+        compile("com.tinkerpatch.sdk:tinkerpatch-android-sdk:${TINKERPATCH_VERSION}") {
+            changing = true
+        }
 
         compile 'com.android.support:appcompat-v7:26.1.0'
         compile 'com.android.support:design:26.1.0'
@@ -132,6 +136,7 @@ dependencies {
         androidTestCompile 'com.android.support:support-annotations:26.1.0'
 
     }
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 apply from: 'tinkerpatch.gradle'

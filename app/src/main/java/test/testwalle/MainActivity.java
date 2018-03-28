@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private TabLayout toolbar_tab;
     private ViewPager viewpager;
-    private String[] data={"aaa","bbb","ccc"};
+    private String[] data={"aaa","bbb","ccc","aaa","bbb","ccc","aaa","bbb","ccc","aaa","bbb","ccc","aaa","bbb","ccc"};
     private List<TextFragment> fragments=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());
         textView = (TextView)findViewById(R.id.test);
         toolbar_tab = (TabLayout)findViewById(R.id.toolbar_tab);
+        //可滑动
+        toolbar_tab.setTabMode(TabLayout.MODE_SCROLLABLE);
+        //全部加载完
+        toolbar_tab.setTabMode(TabLayout.MODE_FIXED);
+
         viewpager = (ViewPager)findViewById(R.id.viewpager);
         button = (Button)findViewById(R.id.button);
         textView.setText("："+channel+""+MApplication.BASE_URL);
