@@ -35,20 +35,15 @@
                     android:host="aaa.com"
                     android:pathPrefix="/recipe"
                     android:scheme="aaa" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".BBBActivity">
-            <intent-filter>
-                <!-- 接受以"http://lyf-app.com/recipe"开头的URI -->
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <action android:name="bbb" />
                 <data
                     android:host="bbb.com"
                     android:scheme="aaa" />
+                <data
+                    android:host="ccc.com"
+                    android:scheme="aaa" />
             </intent-filter>
+        </activity>
+        <activity android:name=".BBBActivity">
 
         </activity>
     </application>

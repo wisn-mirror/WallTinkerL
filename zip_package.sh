@@ -7,7 +7,70 @@
 
 
 #gradle clean assembleProductReleaseChannels
-gradle clean assembleCheckReleaseChannels
 #选中渠道打包
 #gradle assembleProductRelease -PchannelList=qihu,vivo,lenovo
 
+
+#加固
+WORKSPACE=/Users/mac/Desktop/githubworkspace/Testwalle/app
+jgPath=/Users/mac/Desktop/tool/360jiagu/jiagu
+keystorePath=/Users/mac/Desktop/tool/store
+wallePath=/Users/mac/Desktop/tool/walle/walle-cli
+buildtools25=/Users/mac/Library/Android/sdk/build-tools/25.0.2
+#/Users/mac/Library/Android/sdk/build-tools/25.0.2/apksigner sign --ks
+gradle clean assembleCheckRelease
+java -jar ${jgPath}/jiagu.jar -login wuyishun_kmk@outlook.com nihao@123456
+java -jar ${jgPath}/jiagu.jar -importsign ${keystorePath}/aaa.jks 123456 android  123456
+#java -jar ${jgPath}/jiagu.jar -importmulpkg ${WORKSPACE}/channel
+java -jar ${jgPath}/jiagu.jar -showsign
+java -jar ${jgPath}/jiagu.jar -showconfig
+java -jar ${jgPath}/jiagu.jar  -showmulpkg
+rm -rf ${WORKSPACE}/build/outputs/jiagu
+mkdir ${WORKSPACE}/build/outputs/jiagu
+#加固
+ls ${WORKSPACE}/build/outputs/apk/ |grep -v 'apkjiagulist.txt' > ${WORKSPACE}/build/apkjiagulist.txt
+while read lineapk
+do
+echo ${lineapk}
+java -jar ${jgPath}/jiagu.jar -jiagu ${WORKSPACE}/build/outputs/apk/${lineapk} ${WORKSPACE}/build/outputs/jiagu/ -autosign
+done < ${WORKSPACE}/build/apkjiagulist.txt
+
+#对齐
+ls ${WORKSPACE}/build/outputs/jiagu/ |grep -v 'apkduiqilist.txt' > ${WORKSPACE}/build/apkduiqilist.txt
+while read lineduiqi
+do
+echo ${lineduiqi}
+${buildtools25}/zipalign -v 4   ${WORKSPACE}/build/outputs/jiagu/${lineduiqi}  ${WORKSPACE}/build/outputs/jiagu/${lineduiqi}
+done < ${WORKSPACE}/build/apkduiqilist.txt
+
+
+#签名
+ls ${WORKSPACE}/build/outputs/jiagu/ |grep -v 'apksign.txt' > ${WORKSPACE}/build/apksign.txt
+while read linesign
+do
+echo ${linesign}
+${buildtools25}/apksigner sign --ks   ${keystorePath}/aaa.jks --ks-key-alias android --ks-pass pass:123456  ${WORKSPACE}/build/outputs/jiagu/${linesign}
+done < ${WORKSPACE}/build/apksign.txt
+
+
+#多渠道
+ls ${WORKSPACE}/build/outputs/jiagu/ |grep -v 'apkchannels.txt' > ${WORKSPACE}/build/apkchannels.txt
+while read linechannel
+do
+echo ${linechannel}
+java -jar ${wallePath}/walle-cli-all.jar batch -f ${WORKSPACE}/channel  ${WORKSPACE}/build/outputs/jiagu/${linechannel}  ${WORKSPACE}/build/outputs/channels
+done < ${WORKSPACE}/build/apkchannels.txt
+
+
+
+
+#单渠道打包输入：java -jar walle-cli-all.jar put -c[渠道名称] [apk路径] [生成的新apk路径（可选）]
+#批量多渠道打包输入：java -jar walle-cli-all.jar batch -f [渠道文件] [apk路径] [生成的新apk路径（可选）]
+
+
+
+#jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore [keystore文件路径] -storepass [keystore文件密码] [待签名apk路径] [keystore文件别名]
+#jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ${keystorePath}/aaa.jks -storepass 123456 ${WORKSPACE}/build/outputs/jiagu/${line} android
+
+# keytool -list -keystore debug.keystore
+#keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android

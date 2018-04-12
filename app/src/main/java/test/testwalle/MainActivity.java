@@ -11,7 +11,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,13 +33,19 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout toolbar_tab;
     private ViewPager viewpager;
     private String[] data={"aaa","bbb","ccc","aaa","bbb","ccc","aaa","bbb","ccc","aaa","bbb","ccc","aaa","bbb","ccc"};
+
     private List<TextFragment> fragments=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());
+
+        String  tag="http://m.lyf.edu.laiyifen.com/view/h5/1003044501000343.html";
+       String result= tag.substring(tag.lastIndexOf("/")+1,tag.lastIndexOf("."));
+        Log.e("MainActivity",result);
         textView = (TextView)findViewById(R.id.test);
         toolbar_tab = (TabLayout)findViewById(R.id.toolbar_tab);
         //可滑动
