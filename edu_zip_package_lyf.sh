@@ -1,9 +1,12 @@
 
-WORKSPACE=/Users/mac/Desktop/Android_lyf_ody/lyf_app/
+WORKSPACE=/Users/mac/Desktop/Android_lyf_ody/lyf_app
 jgPath=/Users/mac/Desktop/tool/360jiagu/jiagu
 keystorePath=${WORKSPACE}/keystore
 wallePath=/Users/mac/Desktop/tool/walle/walle-cli
 buildtools25=/Users/mac/Library/Android/sdk/build-tools/25.0.2
+backup_Dir=/Users/mac/Desktop/Version/edubackup
+cd ${WORKSPACE}
+cd ..
 echo 开始打包
 gradle clean assembleEdu
 
@@ -51,6 +54,7 @@ echo signsuccess
 
 
 apkName
+uploadPath
 rm -rf ${WORKSPACE}/build/outputs/channels
 mkdir ${WORKSPACE}/build/outputs/channels
 #多渠道
@@ -71,6 +75,14 @@ substr=${channelsline%#*}
 echo 渠道${substr}start
 substr=$(echo $substr)
 echo ${WORKSPACE}/build/outputs/channels/${substr}_${apkName}
-java -jar ${wallePath}/walle-cli-all.jar put -c ${substr} ${WORKSPACE}/build/outputs/duiqi/${apkName}   ${WORKSPACE}/build/outputs/channels/${substr}_${apkName}
+uploadPath=${WORKSPACE}/build/outputs/channels/${substr}_${apkName}
+java -jar ${wallePath}/walle-cli-all.jar put -c ${substr} ${WORKSPACE}/build/outputs/duiqi/${apkName}   ${uploadPath}
 echo 渠道${substr}end
 done <${WORKSPACE}/channel
+
+curl -F "file=@"${uploadPath} -F "uKey=ed639f2e5cac76e08c1eb24b775c2b69" -F "_api_key=30ddd93225add3ed02677a8ae9722d80" https://qiniu-storage.pgyer.com/apiv1/app/upload
+
+#备份
+rm -rf ${backup_Dir}
+mkdir ${WORKSPACE}/build/outputs/channels
+cp -R ${WORKSPACE}/build/* ${backup_Dir}/
