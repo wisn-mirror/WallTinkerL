@@ -5,7 +5,7 @@ keystorePath=${WORKSPACE}/keystore
 wallePath=/Users/mac/Desktop/tool/walle/walle-cli
 buildtools25=/Users/mac/Library/Android/sdk/build-tools/25.0.2
 echo 开始打包
-gradle clean assembleRelease
+gradle clean assembleEdu
 
 java -jar ${jgPath}/jiagu.jar -login wuyishun_kmk@outlook.com nihao@123456
 java -jar ${jgPath}/jiagu.jar -importsign ${keystorePath}/laiyifen.key laiyifen laiyifen  laiyifen
@@ -50,14 +50,27 @@ done < ${WORKSPACE}/build/apksign.txt
 echo signsuccess
 
 
+apkName
 rm -rf ${WORKSPACE}/build/outputs/channels
 mkdir ${WORKSPACE}/build/outputs/channels
 #多渠道
-echo startwalleChannels
 ls ${WORKSPACE}/build/outputs/duiqi/ |grep -v 'apkchannels.txt' > ${WORKSPACE}/build/apkchannels.txt
 while read linechannel
 do
-echo  ${WORKSPACE}/build/outputs/duiqi/${linechannel}
-java -jar ${wallePath}/walle-cli-all.jar batch -f ${WORKSPACE}/channel  ${WORKSPACE}/build/outputs/duiqi/${linechannel}  ${WORKSPACE}/build/outputs/channels
-done < ${WORKSPACE}/build/apkchannels.txt
-echo endWalleChannels
+echo ${linechannel}
+apkName=${linechannel}
+done <${WORKSPACE}/build/apkchannels.txt
+echo path:${WORKSPACE}/build/outputs/duiqi/${apkName}
+while read channelsline
+do
+if echo "$channelsline"|grep -q -E "^$|^#"
+then
+continue
+fi
+substr=${channelsline%#*}
+echo 渠道${substr}start
+substr=$(echo $substr)
+echo ${WORKSPACE}/build/outputs/channels/${substr}_${apkName}
+java -jar ${wallePath}/walle-cli-all.jar put -c ${substr} ${WORKSPACE}/build/outputs/duiqi/${apkName}   ${WORKSPACE}/build/outputs/channels/${substr}_${apkName}
+echo 渠道${substr}end
+done <${WORKSPACE}/channel
