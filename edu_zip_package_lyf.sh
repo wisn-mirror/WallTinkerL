@@ -83,6 +83,6 @@ done <${WORKSPACE}/channel
 curl -F "file=@"${uploadPath} -F "uKey=ed639f2e5cac76e08c1eb24b775c2b69" -F "_api_key=30ddd93225add3ed02677a8ae9722d80" https://qiniu-storage.pgyer.com/apiv1/app/upload
 
 #备份
-rm -rf ${backup_Dir}
-mkdir ${WORKSPACE}/build/outputs/channels
+rm -rf ${backup_Dir}/
+mkdir ${backup_Dir}/
 cp -R ${WORKSPACE}/build/* ${backup_Dir}/
