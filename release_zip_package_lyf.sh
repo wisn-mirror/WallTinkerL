@@ -5,10 +5,28 @@ keystorePath=${WORKSPACE}/keystore
 wallePath=/Users/mac/Desktop/tool/walle/walle-cli
 buildtools25=/Users/mac/Library/Android/sdk/build-tools/25.0.2
 backup_Dir=/Users/mac/Desktop/Version/releasebackup
+BuildLog=/Users/mac/Desktop/Version/
+
 cd ${WORKSPACE}
 cd ..
 echo 开始打包
-gradle clean assembleRelease
+
+echo 开始打包
+gradle clean assembleRelease | grep -v 'Releasebuildlog.txt' > ${BuildLog}/Releasebuildlog.txt
+while read channelsline
+do
+if echo "$channelsline"|grep -q -E "^:"
+then
+continue
+elif [ "$channelsline" = "BUILD SUCCESSFUL" ];then
+break
+elif [ "$channelsline" = "BUILD FAILED" ];then
+echo 'BUILDFAILED'
+exit
+fi
+done <${BuildLog}/Releasebuildlog.txt
+
+
 
 java -jar ${jgPath}/jiagu.jar -login wuyishun_kmk@outlook.com nihao@123456
 java -jar ${jgPath}/jiagu.jar -importsign ${keystorePath}/laiyifen.key laiyifen laiyifen  laiyifen
@@ -65,6 +83,7 @@ echo ${linechannel}
 apkName=${linechannel}
 done <${WORKSPACE}/build/apkchannels.txt
 echo path:${WORKSPACE}/build/outputs/duiqi/${apkName}
+
 while read channelsline
 do
 if echo "$channelsline"|grep -q -E "^$|^#"

@@ -55,7 +55,14 @@ public class MainActivity extends AppCompatActivity {
 
         viewpager = (ViewPager)findViewById(R.id.viewpager);
         button = (Button)findViewById(R.id.button);
-        textView.setText("："+channel+""+MApplication.BASE_URL);
+        textView.setText(channel+""+MApplication.BASE_URL);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                update();
+            }
+        });
+
         for(int i=0;i<data.length;i++){
             fragments.add(new TextFragment());
             TabLayout.Tab tab = toolbar_tab.newTab();
@@ -89,16 +96,16 @@ public class MainActivity extends AppCompatActivity {
     }
     public void update(){
         //        textView.setText(channel+""+MApplication.BASE_URL);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData mClipData = ClipData.newPlainText("Label", textView.getText());
-                // 将文本内容放到系统剪贴板里。
-                cm.setPrimaryClip(mClipData);
-                Toast.makeText(MainActivity.this, "已经复制成功", Toast.LENGTH_LONG).show();
-            }
-        });
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+//                ClipData mClipData = ClipData.newPlainText("Label", textView.getText());
+//                // 将文本内容放到系统剪贴板里。
+//                cm.setPrimaryClip(mClipData);
+//                Toast.makeText(MainActivity.this, "已经复制成功", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
       /*  for(int i=0;i<10;i++){
             textView.append( getUUid()+"\n");

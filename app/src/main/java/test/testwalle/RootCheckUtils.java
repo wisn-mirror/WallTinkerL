@@ -14,9 +14,8 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 /**
- * Created by mac on 2018/3/22.
+ * 检查运行环境是否root
  */
-
 public class RootCheckUtils {
     private static String LOG_TAG = RootCheckUtils.class.getName();
 

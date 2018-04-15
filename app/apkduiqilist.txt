@@ -1,0 +1,76 @@
+NDK is missing a "platforms" directory.
+If you are using NDK, verify the ndk.dir is set to a valid NDK directory.  It is currently set to /Users/mac/Library/Android/sdk/ndk-bundle.
+If you are not using NDK, unset the NDK variable from ANDROID_NDK_HOME or local.properties to remove this warning.
+
+Incremental java compilation is an incubating feature.
+:clean
+:app:clean
+:app:preBuild UP-TO-DATE
+:app:preCheckReleaseBuild UP-TO-DATE
+:app:checkCheckReleaseManifest
+:app:preCheckDebugBuild UP-TO-DATE
+:app:preDevelopDebugBuild UP-TO-DATE
+:app:preDevelopReleaseBuild UP-TO-DATE
+:app:preProductDebugBuild UP-TO-DATE
+:app:preProductReleaseBuild UP-TO-DATE
+:app:prepareAndroidArchLifecycleRuntime100Library
+:app:prepareComAndroidSupportAnimatedVectorDrawable2610Library
+:app:prepareComAndroidSupportAppcompatV72610Library
+:app:prepareComAndroidSupportConstraintConstraintLayout102Library
+:app:prepareComAndroidSupportDesign2610Library
+:app:preCheckDebugAndroidTestBuild UP-TO-DATE
+:app:preDevelopDebugAndroidTestBuild UP-TO-DATE
+:app:preProductDebugAndroidTestBuild UP-TO-DATE
+:app:prepareComAndroidSupportMultidex101Library
+:app:prepareComAndroidSupportRecyclerviewV72610Library
+:app:prepareComAndroidSupportSupportCompat2610Library
+:app:prepareComAndroidSupportSupportCoreUi2610Library
+:app:prepareComAndroidSupportSupportCoreUtils2610Library
+:app:prepareComAndroidSupportSupportFragment2610Library
+:app:prepareComAndroidSupportSupportMediaCompat2610Library
+:app:prepareComAndroidSupportSupportV42610Library
+:app:prepareComAndroidSupportSupportVectorDrawable2610Library
+:app:prepareComAndroidSupportTransition2610Library
+:app:prepareComMeituanAndroidWalleLibrary116Library
+:app:prepareComTinkerpatchSdkTinkerpatchAndroidSdk122Library
+:app:prepareComTinkerpatchTinkerTinkerAndroidLib192Library
+:app:prepareComTinkerpatchTinkerTinkerAndroidLoader192Library
+:app:prepareCheckReleaseDependencies
+:app:compileCheckReleaseAidl
+:app:compileCheckReleaseRenderscript
+:app:generateCheckReleaseBuildConfig
+:app:generateCheckReleaseResValues
+:app:generateCheckReleaseResources
+:app:mergeCheckReleaseResources
+:app:processCheckReleaseManifest
+:app:tinkerpatchSupportProcessCheckReleaseManifest
+:app:tinkerProcessCheckReleaseManifest
+:app:tinkerProcessCheckReleaseResourceId
+:app:processCheckReleaseResources
+:app:generateCheckReleaseSources
+:app:incrementalCheckReleaseJavaCompilationSafeguard
+:app:javaPreCompileCheckRelease
+:app:compileCheckReleaseJavaWithJavac
+:app:compileCheckReleaseJavaWithJavac - is not incremental (e.g. outputs have changed, no previous execution, etc.).
+:app:compileCheckReleaseNdk UP-TO-DATE
+:app:compileCheckReleaseSources
+:app:lintVitalCheckRelease
+:app:mergeCheckReleaseShaders
+:app:compileCheckReleaseShaders
+:app:generateCheckReleaseAssets
+:app:mergeCheckReleaseAssets
+:app:transformClassesWithJarMergingForCheckRelease
+:app:tinkerProcessCheckReleaseMultidexKeep
+:app:transformClassesWithMultidexlistForCheckRelease
+:app:transformClassesWithDexForCheckRelease
+:app:mergeCheckReleaseJniLibFolders
+:app:transformNativeLibsWithMergeJniLibsForCheckRelease
+:app:processCheckReleaseJavaRes UP-TO-DATE
+:app:transformResourcesWithMergeJavaResForCheckRelease
+:app:validateSigningCheckRelease
+:app:packageCheckRelease
+:app:assembleCheckRelease
+
+BUILD SUCCESSFUL
+
+Total time: 11.659 secs

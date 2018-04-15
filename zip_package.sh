@@ -18,43 +18,56 @@ keystorePath=/Users/mac/Desktop/tool/store
 wallePath=/Users/mac/Desktop/tool/walle/walle-cli
 buildtools25=/Users/mac/Library/Android/sdk/build-tools/25.0.2
 #
-#gradle clean assembleCheckRelease
-#java -jar ${jgPath}/jiagu.jar -login wuyishun_kmk@outlook.com nihao@123456
-#java -jar ${jgPath}/jiagu.jar -importsign ${keystorePath}/aaa.jks 123456 android  123456
-#java -jar ${jgPath}/jiagu.jar -showsign
-#java -jar ${jgPath}/jiagu.jar -showconfig
-#java -jar ${jgPath}/jiagu.jar -showmulpkg
-#
-#rm -rf ${WORKSPACE}/build/outputs/jiagu
-#mkdir ${WORKSPACE}/build/outputs/jiagu
-##加固
-#ls ${WORKSPACE}/build/outputs/apk/ |grep -v 'apkjiagulist.txt' > ${WORKSPACE}/build/apkjiagulist.txt
-#while read lineapk
-#do
-#echo ${lineapk}
-#java -jar ${jgPath}/jiagu.jar -jiagu ${WORKSPACE}/build/outputs/apk/${lineapk} ${WORKSPACE}/build/outputs/jiagu/ -autosign
-#done < ${WORKSPACE}/build/apkjiagulist.txt
-#
-#
-#rm -rf ${WORKSPACE}/build/outputs/duiqi
-#mkdir ${WORKSPACE}/build/outputs/duiqi
-##对齐
-#ls ${WORKSPACE}/build/outputs/jiagu/ |grep -v 'apkduiqilist.txt' > ${WORKSPACE}/build/apkduiqilist.txt
-#while read lineduiqi
-#do
-#echo ${lineduiqi}
-#${buildtools25}/zipalign -v 4   ${WORKSPACE}/build/outputs/jiagu/${lineduiqi}  ${WORKSPACE}/build/outputs/duiqi/${lineduiqi}
-#done < ${WORKSPACE}/build/apkduiqilist.txt
-#
-#
-##签名
-#ls ${WORKSPACE}/build/outputs/duiqi/ |grep -v 'apksign.txt' > ${WORKSPACE}/build/apksign.txt
-#while read linesign
-#do
-#echo ${linesign}
-#${buildtools25}/apksigner sign --ks   ${keystorePath}/aaa.jks --ks-key-alias android --ks-pass pass:123456  ${WORKSPACE}/build/outputs/duiqi/${linesign}
-#done < ${WORKSPACE}/build/apksign.txt
-#
+gradle clean assembleCheckRelease | grep -v 'buildlog.txt' > ${WORKSPACE}/buildlog.txt
+while read channelsline
+do
+if echo "$channelsline"|grep -q -E "^:"
+then
+continue
+elif [ "$channelsline" = "BUILD SUCCESSFUL" ];then
+break
+elif [ "$channelsline" = "BUILD FAILED" ];then
+echo 'BUILDFAILED'
+exit
+fi
+done <${WORKSPACE}/buildlog.txt
+
+java -jar ${jgPath}/jiagu.jar -login wuyishun_kmk@outlook.com nihao@123456
+java -jar ${jgPath}/jiagu.jar -importsign ${keystorePath}/aaa.jks 123456 android  123456
+java -jar ${jgPath}/jiagu.jar -showsign
+java -jar ${jgPath}/jiagu.jar -showconfig
+java -jar ${jgPath}/jiagu.jar -showmulpkg
+
+rm -rf ${WORKSPACE}/build/outputs/jiagu
+mkdir ${WORKSPACE}/build/outputs/jiagu
+#加固
+ls ${WORKSPACE}/build/outputs/apk/ |grep -v 'apkjiagulist.txt' > ${WORKSPACE}/build/apkjiagulist.txt
+while read lineapk
+do
+echo ${lineapk}
+java -jar ${jgPath}/jiagu.jar -jiagu ${WORKSPACE}/build/outputs/apk/${lineapk} ${WORKSPACE}/build/outputs/jiagu/ -autosign
+done < ${WORKSPACE}/build/apkjiagulist.txt
+
+
+rm -rf ${WORKSPACE}/build/outputs/duiqi
+mkdir ${WORKSPACE}/build/outputs/duiqi
+#对齐
+ls ${WORKSPACE}/build/outputs/jiagu/ |grep -v 'apkduiqilist.txt' > ${WORKSPACE}/build/apkduiqilist.txt
+while read lineduiqi
+do
+echo ${lineduiqi}
+${buildtools25}/zipalign -v 4   ${WORKSPACE}/build/outputs/jiagu/${lineduiqi}  ${WORKSPACE}/build/outputs/duiqi/${lineduiqi}
+done < ${WORKSPACE}/build/apkduiqilist.txt
+
+
+#签名
+ls ${WORKSPACE}/build/outputs/duiqi/ |grep -v 'apksign.txt' > ${WORKSPACE}/build/apksign.txt
+while read linesign
+do
+echo ${linesign}
+${buildtools25}/apksigner sign --ks   ${keystorePath}/aaa.jks --ks-key-alias android --ks-pass pass:123456  ${WORKSPACE}/build/outputs/duiqi/${linesign}
+done < ${WORKSPACE}/build/apksign.txt
+
 
 apkName
 rm -rf ${WORKSPACE}/build/outputs/channels
@@ -67,6 +80,7 @@ echo ${linechannel}
 apkName=${linechannel}
 done <${WORKSPACE}/build/apkchannels.txt
 echo path:${WORKSPACE}/build/outputs/duiqi/${apkName}
+
 while read channelsline
 do
 if echo "$channelsline"|grep -q -E "^$|^#"
