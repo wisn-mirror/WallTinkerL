@@ -24,24 +24,29 @@
 #echo ${substr}
 #echo ${substr}
 #/Users/mac/Desktop/tool/fir.sh
-
-WORKSPACE=/Users/mac/Desktop/githubworkspace/Testwalle/app
-
-gradle clean assembleCheckRelease | grep -v 'apkduiqilist.txt' > ${WORKSPACE}/apkduiqilist.txt
-while read channelsline
-do
-if echo "$channelsline"|grep -q -E "^:"
-then
-continue
-echo "$channelsline"
-elif [ "$channelsline" = "BUILD SUCCESSFUL" ];then
-echo 'buildSUCCESSFUL'
-break
-elif [ "$channelsline" = "BUILD FAILED" ];then
-echo 'BUILDFAILEDbbbbbbb'
+duiqiisOk=ok
+if [ "$duiqiisOk" != ok ];then
 exit
+echo 4kok
 fi
-done <${WORKSPACE}/apkduiqilist.txt
+#
+#WORKSPACE=/Users/mac/Desktop/githubworkspace/Testwalle/app
+#
+#gradle clean assembleCheckRelease | grep -v 'apkduiqilist.txt' > ${WORKSPACE}/apkduiqilist.txt
+#while read channelsline
+#do
+#if echo "$channelsline"|grep -q -E "^:"
+#then
+#continue
+#echo "$channelsline"
+#elif [ "$channelsline" = "BUILD SUCCESSFUL" ];then
+#echo 'buildSUCCESSFUL'
+#break
+#elif [ "$channelsline" = "BUILD FAILED" ];then
+#echo 'BUILDFAILEDbbbbbbb'
+#exit
+#fi
+#done <${WORKSPACE}/apkduiqilist.txt
 
 ##awk 'END {print}'
 #aaa=

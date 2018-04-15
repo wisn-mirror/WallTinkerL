@@ -46,6 +46,7 @@ done < ${WORKSPACE}/build/apkjiagulist.txt
 echo 加固结束
 
 
+duiqiisOk=false
 rm -rf ${WORKSPACE}/build/outputs/duiqi
 mkdir ${WORKSPACE}/build/outputs/duiqi
 #对齐
@@ -53,10 +54,16 @@ echo start4k
 ls ${WORKSPACE}/build/outputs/jiagu/ |grep -v 'apkduiqilist.txt' > ${WORKSPACE}/build/apkduiqilist.txt
 while read lineduiqi
 do
+duiqiisOk=ok
 echo ${WORKSPACE}/build/outputs/jiagu/${lineduiqi}
 ${buildtools25}/zipalign -v 4   ${WORKSPACE}/build/outputs/jiagu/${lineduiqi}  ${WORKSPACE}/build/outputs/duiqi/${lineduiqi}
 done < ${WORKSPACE}/build/apkduiqilist.txt
-echo 4kok
+if [ "$duiqiisOk" != ok ];then
+echo zipalignfailed
+exit
+echo zipalign4kok
+fi
+
 
 #签名
 echo startsign
