@@ -29,6 +29,8 @@ if [ "$duiqiisOk" != ok ];then
 exit
 echo 4kok
 fi
+
+keytool -list -v -keystore ./lyf_app/keystore/laiyifen.key
 #
 #WORKSPACE=/Users/mac/Desktop/githubworkspace/Testwalle/app
 #
