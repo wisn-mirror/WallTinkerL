@@ -10,7 +10,7 @@ cd ${WORKSPACE}
 cd ..
 
 echo 开始打包
-gradle clean assembleEdu | grep -v 'Edubuildlog.txt' > ${Edubuildlog}/buildlog.txt
+gradle clean assembleEdu | grep -v 'Edubuildlog.txt' > ${BuildLog}/buildlog.txt
 while read channelsline
 do
 if echo "$channelsline"|grep -q -E "^:"
