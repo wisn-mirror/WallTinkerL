@@ -5,7 +5,7 @@ keystorePath=${WORKSPACE}/keystore
 wallePath=/Users/mac/Desktop/tool/walle/walle-cli
 buildtools25=/Users/mac/Library/Android/sdk/build-tools/25.0.2
 backup_Dir=/Users/mac/Desktop/Version/releasebackup
-BuildLog=/Users/mac/Desktop/Version/
+BuildLog=/Users/mac/Desktop/Version
 
 cd ${WORKSPACE}
 cd ..

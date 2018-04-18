@@ -5,12 +5,12 @@ keystorePath=${WORKSPACE}/keystore
 wallePath=/Users/mac/Desktop/tool/walle/walle-cli
 buildtools25=/Users/mac/Library/Android/sdk/build-tools/25.0.2
 backup_Dir=/Users/mac/Desktop/Version/edubackup
-BuildLog=/Users/mac/Desktop/Version/
+BuildLog=/Users/mac/Desktop/Version
 cd ${WORKSPACE}
 cd ..
 
 echo 开始打包
-gradle clean assembleEdu | grep -v 'Edubuildlog.txt' > ${BuildLog}/buildlog.txt
+gradle clean assembleEdu | grep -v 'Edubuildlog.txt' > ${BuildLog}/Edubuildlog.txt
 while read channelsline
 do
 if echo "$channelsline"|grep -q -E "^:"
